@@ -4,7 +4,7 @@
 ## Introduction
 YOLOX_AUDIO is an audio event detection model based on YOLOX, an anchor-free version of YOLO.
 This repo is an implementated by PyTorch.
-Main goal of YOLOX_AUDIO is to 
+Main goal of YOLOX_AUDIO is to detect and classify pre-defined audio events in multi-spectrogram domain using image object detection frameworks. 
 
 
 ## Updates!!
