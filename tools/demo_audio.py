@@ -228,7 +228,7 @@ def wav_to_img(wav_path, multi_channel):
     sr = 6000
 
     # STFT -> spectrogram
-    hop_length = 64  # 전체 frame 수 (21.33ms)
+    hop_length = 128  # 전체 frame 수 (21.33ms)
     n_fft = 512  # frame 하나당 sample 수 (85.33ms)
     hop_length_s = hop_length / sr
 
@@ -241,22 +241,23 @@ def wav_to_img(wav_path, multi_channel):
     stft = stft[1:,:]
     f_len = stft.shape[0]
     t_len = stft.shape[-1]
-    t_step = 1024
+    t_step = 512
     c_len = 3
 
     # 복소공간 값 절댓값 취하기
-    mel = librosa.feature.melspectrogram(S=np.abs(stft), sr=sr, n_mels=256).reshape(256, -1, 1)** 2.0
-    power = np.abs(stft).reshape(256, -1, 1)** 2.0
-    mag = np.abs(stft).reshape(256, -1, 1)
+    mel = librosa.feature.melspectrogram(S=np.abs(stft), sr=sr, n_mels=f_len).reshape(f_len, -1, 1)
+    mag = np.abs(stft).reshape(f_len, -1, 1)
+    mfcc = librosa.feature.mfcc(S=mel, sr=sr, n_mfcc=f_len)
 
-    feat_cat = np.concatenate((mel, power, mag), axis = 2)
+    feat_cat = np.concatenate((mel, mag, mfcc), axis = 2)
+    feat_cat = feat_cat ** 2.0
 
     # magnitude > Decibels
     for i in range(0,3):
         feat = feat_cat[:,:,i]
         log_spectrogram = librosa.amplitude_to_db(feat)
         log_spectrogram += np.abs(log_spectrogram.min()) + 1e-5
-        log_spectrogram /= log_spectrogram.max() 
+        log_spectrogram /= log_spectrogram.max()
         log_spectrogram *= 255.0
         log_spectrogram = np.flip(log_spectrogram, axis=0)
         feat_cat[:,:,i] = log_spectrogram
