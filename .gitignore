@@ -219,5 +219,4 @@ events.out.tfevents*
 .vim
 
 # test images
-*.jpg
 *.wav
