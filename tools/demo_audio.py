@@ -65,7 +65,7 @@ def make_parser():
     parser.add_argument("--conf", default=0.25, type=float, help="test conf")
     parser.add_argument("--nms", default=0.65, type=float, help="test nms threshold")
     parser.add_argument("--tsize_h", default=256, type=int, help="test img size(h)")
-    parser.add_argument("--tsize_w", default=1024, type=int, help="test img size(w)")
+    parser.add_argument("--tsize_w", default=512, type=int, help="test img size(w)")
     parser.add_argument(
         "--fp16",
         dest="fp16",
@@ -205,19 +205,10 @@ class Predictor(object):
         return vis_res
 
 
-def wav_to_img(wav_path, multi_channel):
+def wav_to_img(wav_path):
     
     try:
-        if multi_channel == None:
-            sr, wavs = wavfile.read(wav_path)
-        else:
-            wavs = []
-            for mc in range(0,multi_channel):
-                wav_path = wav_path.replace("ch"+str(mc),"ch"+str(mc+1))
-                sr, wav_ch = wavfile.read(wav_path)
-                wav_ch = wav_ch[:,0]
-                wavs.append(wav_ch)
-            wavs = np.array(wavs).T
+        sr, wavs = wavfile.read(wav_path)
     except:
         print('Can not load wav file')
 
@@ -280,7 +271,7 @@ def wav_to_img(wav_path, multi_channel):
     return img_set, t_step, hop_length, sr
 
 
-def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_channel=None, save_folder=None):
+def wav_demo(predictor, vis_folder, path, current_time, save_result, save_folder=None):
 
     if os.path.isdir(path):
         files = get_wav_list(path)
@@ -288,17 +279,10 @@ def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_chann
         files = [path]
     files.sort()
 
-    #define json outputs
-    json_file = open("track2.json", "w")
-    json_data = []
-    json_data.append({"task2_answer":[{}]})
-
-    if multi_channel != None:
-        files = files[::multi_channel]
 
     for _file in files:
         ## Load wav file then convert into image sets
-        img_set, t_step, hop_length, sr = wav_to_img(_file, multi_channel)
+        img_set, t_step, hop_length, sr = wav_to_img(_file)
         filename = _file.split('/')[-1]
         filename = filename.split('.')[0]
 
@@ -375,37 +359,6 @@ def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_chann
             vad_set[:,0:2] *= time_unit
         print(vad_set)
    
-def imageflow_demo(predictor, vis_folder, current_time, args, save_folder=None):
-    cap = cv2.VideoCapture(args.path if args.demo == "video" else args.camid)
-    width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)  # float
-    height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)  # float
-    fps = cap.get(cv2.CAP_PROP_FPS)
-    if save_folder == None:
-        save_folder = os.path.join(
-            vis_folder, time.strftime("%Y_%m_%d_%H_%M_%S", current_time)
-        )
-    os.makedirs(save_folder, exist_ok=True)
-    if args.demo == "video":
-        save_path = os.path.join(save_folder, args.path.split("/")[-1])
-    else:
-        save_path = os.path.join(save_folder, "camera.mp4")
-    logger.info(f"video save_path is {save_path}")
-    vid_writer = cv2.VideoWriter(
-        save_path, cv2.VideoWriter_fourcc(*"mp4v"), fps, (int(width), int(height))
-    )
-    while True:
-        ret_val, frame = cap.read()
-        if ret_val:
-            outputs, img_info = predictor.inference(frame)
-            result_frame = predictor.visual(outputs[0], img_info, predictor.confthre)
-            if args.save_result:
-                vid_writer.write(result_frame)
-            ch = cv2.waitKey(1)
-            if ch == 27 or ch == ord("q") or ch == ord("Q"):
-                break
-        else:
-            break
-
 
 def main(exp, args):
     if not args.experiment_name:
