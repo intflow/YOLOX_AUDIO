@@ -1,4 +1,4 @@
-python3 tools/demo.py --demo image -expn yolox_audio__tr2 -n yolox_audio_x \
+python3 tools/demo_audio.py --demo image -expn yolox_audio__tr2 -n yolox_audio_x \
 -f exps/yolox_audio__tr2/yolox_x.py \
 -c YOLOX_outputs/yolox_audio__tr2/best_ckpt.pth \
 --path /data/AIGC_3rd_2021/GIST_tr2_100/img/ \
