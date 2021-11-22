@@ -1,5 +1,5 @@
 <div align="center"><img src="assets/logo.png" width="350"></div>
-<div align="center"><img src="assets/demo.jpg" ></div>
+<div align="center"><img src="assets/test_0.jpg" ></div>
 
 ## Introduction
 YOLOX_AUDIO is an audio event detection model based on YOLOX, an anchor-free version of YOLO.
