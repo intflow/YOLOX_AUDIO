@@ -77,7 +77,7 @@ def main(GT_PATH=None, ANSWER_PATH=None):
         if args.verbose >= 1:
             print('\'{}\' score: ins-{}, sub-{}, del-{}, num-{}, score-{}'.format(gt_idx, i_err, s_err, d_err, num_gt, err_score))
         task2_score = np.append(task2_score, err_score)
-    print('Task 2 score: {:.4f}'.format(np.mean(task2_score)))
+    print('Evaluation score: {:.4f}'.format(np.mean(task2_score)))
 
 
 if __name__ == '__main__':

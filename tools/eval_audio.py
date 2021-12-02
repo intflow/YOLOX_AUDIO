@@ -13,15 +13,15 @@ def main():
     t = TicToc()
     t.tic()
 
-    #import infer_audio
-    #json_out = infer_audio.run_audio_infer(DATA_PATH)
-    #
-#
-    #print("----Write Answer:----")
-    #with open(OUTPUT_PATH, "w", encoding='UTF-8') as json_file:
-    #    json.dump(json_out, json_file, indent=2, ensure_ascii=False)
+    import infer_audio
+    json_out = infer_audio.run_audio_infer(DATA_PATH)
+    
 
-    ## 6. Evaluate scores (Target, Estimates)
+    print("----Write Answer:----")
+    with open(OUTPUT_PATH, "w", encoding='UTF-8') as json_file:
+        json.dump(json_out, json_file, indent=2, ensure_ascii=False)
+
+    ## Evaluate scores (Target, Estimates)
     import metric_audio
     metric_audio.main(GT_PATH, OUTPUT_PATH)
     t.toc()
