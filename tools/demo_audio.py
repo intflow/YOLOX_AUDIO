@@ -28,7 +28,7 @@ def make_parser():
     parser.add_argument(
         "--demo", default="wav", help="demo type, eg. wav"
     )
-    parser.add_argument("-expn", "--experiment-name", type=str, default="yolox_audio__tr2")
+    parser.add_argument("-expn", "--experiment-name", type=str, default="yolox_audio")
     parser.add_argument("-n", "--name", type=str, default="yolox_audio_x", help="model name")
 
     parser.add_argument(
@@ -49,11 +49,11 @@ def make_parser():
     parser.add_argument(
         "-f",
         "--exp_file",
-        default="exps/yolox_audio__tr2/yolox_x.py",
+        default="exps/yolox_audio/yolox_x.py",
         type=str,
         help="pls input your expriment description file",
     )
-    parser.add_argument("-c", "--ckpt", default="YOLOX_outputs/yolox_audio__tr2/best_ckpt.pth", type=str, help="ckpt for eval")
+    parser.add_argument("-c", "--ckpt", default="YOLOX_outputs/yolox_audio/best_ckpt.pth", type=str, help="ckpt for eval")
     #parser.add_argument("-m", "--model", default=None, type=str, help="model reference for eval")
     #parser.add_argument("-c", "--ckpt", default="/data/pretrained/hcow/yolox_s_oad_lm3__intflow_total_1K_p0.pth", type=str, help="ckpt for eval")
     parser.add_argument(

@@ -17,7 +17,7 @@ from yolox.utils import configure_nccl, configure_omp, get_num_devices
 
 def make_parser():
     parser = argparse.ArgumentParser("YOLOX_AUDIO train parser")
-    parser.add_argument("-expn", "--experiment-name", type=str, default="yolox_audio__tr2")
+    parser.add_argument("-expn", "--experiment-name", type=str, default="yolox_audio")
     parser.add_argument("-n", "--name", type=str, default="yolox_audio_x", help="model name")
 
     # distributed
@@ -37,7 +37,7 @@ def make_parser():
     parser.add_argument(
         "-f",
         "--exp_file",
-        default='exps/yolox_audio__tr2/yolox_x.py',
+        default='exps/yolox_audio/yolox_x.py',
         type=str,
         help="plz input your expriment description file",
     )
@@ -49,7 +49,7 @@ def make_parser():
     )
     #parser.add_argument("-c", "--ckpt", default=None, type=str, help="checkpoint file")
     #parser.add_argument("-c", "--ckpt", default='/data/pretrained/yolox_x.pth', type=str, help="checkpoint file")
-    parser.add_argument("-c", "--ckpt", default='YOLOX_outputs/yolox_audio__tr2/best_ckpt.pth', type=str, help="checkpoint file")
+    parser.add_argument("-c", "--ckpt", default='YOLOX_outputs/yolox_audio/best_ckpt.pth', type=str, help="checkpoint file")
     #parser.add_argument("-c", "--ckpt", default='YOLOX_outputs/yolox_oad_lm3__tr2_pig/best_ckpt.pth', type=str, help="checkpoint file")
     parser.add_argument(
         "-e",

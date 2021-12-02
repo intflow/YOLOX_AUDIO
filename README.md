@@ -131,7 +131,7 @@ train_label_merge_out = os.path.join(root, 'label_coco_bbox.json')
 <details>
 <summary>Training</summary>
 
-Step1. Change Data loading path of exps/yolox_audio__tr2/yolox_x.py
+Step1. Change Data loading path of exps/yolox_audio/yolox_x.py
 ```shell
         self.train_path = '/data/AIGC_3rd_2021/GIST_tr2_veryhard5000_all_tr2'
         self.val_path = '/data/AIGC_3rd_2021/tr2_set_01_tune'
@@ -142,8 +142,8 @@ Step1. Change Data loading path of exps/yolox_audio__tr2/yolox_x.py
 Step2. Begin training:
 
 ```shell
-python3 tools/train.py -expn yolox_audio__tr2 -n yolox_audio_x \
--f exps/yolox_audio__tr2/yolox_x.py -d 4 -b 32 --fp16 \
+python3 tools/train.py -expn yolox_audio -n yolox_audio_x \
+-f exps/yolox_audio/yolox_x.py -d 4 -b 32 --fp16 \
 -c /data/pretrained/yolox_x.pth
 
 ```
@@ -164,8 +164,8 @@ https://github.com/Megvii-BaseDetection/YOLOX
 Run following demo_audio.py
 
 ```shell
-python3 tools/demo_audio.py --demo wav -expn yolox_audio__tr2 -n yolox_audio_x \
--f exps/yolox_audio__tr2/yolox_x.py \
+python3 tools/demo_audio.py --demo wav -expn yolox_audio -n yolox_audio_x \
+-f exps/yolox_audio/yolox_x.py \
 -c /data/pretrained/yolox_x__AGC21_tr2.pth \
 --path ./assets/test.wav \
 --conf 0.2 --nms 0.65 --tsize_h 256 --tsize_w 512 --save_result --device gpu
