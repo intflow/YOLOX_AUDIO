@@ -43,7 +43,7 @@ def make_parser():
         "--save_folder", default=None, help="path to images or video output"
     )
     parser.add_argument(
-        "--multi_channel", default=7, help="set subsequent multi-channel files"
+        "--multi_channel", default=None, help="set subsequent multi-channel files"
     )
     parser.add_argument("--camid", type=int, default=0, help="webcam demo camera id")
     parser.add_argument(
@@ -415,34 +415,35 @@ def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_chann
 
         ##print(vad_set)
 
-        if multi_channel is not None:
-            #Write json
-            if set_name not in json_data[0]["task2_answer"][0]:
-                json_data[0]["task2_answer"][0][set_name]=[]
-            
-            if len(json_data[0]["task2_answer"][0][set_name]) == int(drone_name[-1])-1:
-                json_data[0]["task2_answer"][0][set_name].append({})
-                json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name] = [{"M":["NONE"], "W":["NONE"], "C":["NONE"]}]
-
-
-            for vad_unit in vad_set:
-                vad_sub = []
-                vad_sub.append(sec2min(0.5*(vad_unit[0] + vad_unit[1])))
-                vad_sub.append(vad_unit[3])
-
-                if vad_sub[-1] == 0:
-                    json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['M'].append(vad_sub[0])
-                elif vad_sub[-1] == 1:
-                    json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['W'].append(vad_sub[0])
-                elif vad_sub[-1] == 2:
-                    json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['C'].append(vad_sub[0])
-
-            if len(json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['M']) > 1:
-                del(json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['M'][0])
-            if len(json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['W']) > 1:
-                del(json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['W'][0])
-            if len(json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['C']) > 1:
-                del(json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['C'][0])
+        #==== AIGC style ====
+        ###if multi_channel is not None:
+        ###    #Write json
+        ###    if set_name not in json_data[0]["task2_answer"][0]:
+        ###        json_data[0]["task2_answer"][0][set_name]=[]
+        ###    
+        ###    if len(json_data[0]["task2_answer"][0][set_name]) == int(drone_name[-1])-1:
+        ###        json_data[0]["task2_answer"][0][set_name].append({})
+        ###        json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name] = [{"M":["NONE"], "W":["NONE"], "C":["NONE"]}]
+###
+###
+        ###    for vad_unit in vad_set:
+        ###        vad_sub = []
+        ###        vad_sub.append(sec2min(0.5*(vad_unit[0] + vad_unit[1])))
+        ###        vad_sub.append(vad_unit[3])
+###
+        ###        if vad_sub[-1] == 0:
+        ###            json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['M'].append(vad_sub[0])
+        ###        elif vad_sub[-1] == 1:
+        ###            json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['W'].append(vad_sub[0])
+        ###        elif vad_sub[-1] == 2:
+        ###            json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['C'].append(vad_sub[0])
+###
+        ###    if len(json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['M']) > 1:
+        ###        del(json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['M'][0])
+        ###    if len(json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['W']) > 1:
+        ###        del(json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['W'][0])
+        ###    if len(json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['C']) > 1:
+        ###        del(json_data[0]["task2_answer"][0][set_name][int(drone_name[-1])-1][drone_name][0]['C'][0])
 
         #with open("track2/track2.json", "w", encoding='UTF-8') as json_file:
         #    json.dump(json_data, json_file, indent=2, ensure_ascii=False)
