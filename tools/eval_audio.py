@@ -7,13 +7,12 @@ from pytictoc import TicToc
 def main():
 
     DATA_PATH = '/data/AIGC_3rd_2021/GIST_tr2_veryhard500/wav'
-    OUTPUT_PATH = 'output/tr2_devel_500_est.json'
         
     t = TicToc()
     t.tic()
 
     import infer_audio
-    json_out = infer_audio.run_audio_infer(DATA_PATH, OUTPUT_PATH)
+    json_out = infer_audio.run_audio_infer(DATA_PATH)
     
 
     print("----Write Answer:----")

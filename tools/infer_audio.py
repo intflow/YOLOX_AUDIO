@@ -61,8 +61,8 @@ def make_parser():
         type=str,
         help="pls input your expriment description file",
     )
-    #parser.add_argument("-c", "--ckpt", default="YOLOX_outputs/yolox_audio/best_ckpt.pth", type=str, help="ckpt for eval")
-    parser.add_argument("-c", "--ckpt", default="/data/pretrained/yolox_x__AGC21_tr2.pth", type=str, help="ckpt for eval")
+    parser.add_argument("-c", "--ckpt", default="YOLOX_outputs/yolox_audio/best_ckpt.pth", type=str, help="ckpt for eval")
+    #parser.add_argument("-c", "--ckpt", default="/data/pretrained/yolox_x__AGC21_tr2.pth", type=str, help="ckpt for eval")
     #parser.add_argument("-m", "--model", default=None, type=str, help="model reference for eval")
     parser.add_argument(
         "--device",
@@ -70,7 +70,7 @@ def make_parser():
         type=str,
         help="device to run our model, can either be cpu or gpu",
     )
-    parser.add_argument("--conf", default=0.8, type=float, help="test conf")
+    parser.add_argument("--conf", default=0.25, type=float, help="test conf")
     parser.add_argument("--nms", default=0.65, type=float, help="test nms threshold")
     parser.add_argument("--tsize_h", default=256, type=int, help="test img size(h)")
     parser.add_argument("--tsize_w", default=512, type=int, help="test img size(w)")
@@ -413,11 +413,11 @@ def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_chann
         CLASS_NAME = ["M", "W", "C"]
         for vad in vad_set:
             speaker_lst.append(CLASS_NAME[int(vad[-1])])
-            on_offset_lst.append([vad_set[0], vad_set[1]])
+            on_offset_lst.append([vad[0], vad[1]])
 
-        json_data[_file+'.wav'] = {}
-        json_data[_file+'.wav']["speaker"] = speaker_lst
-        json_data[_file+'.wav']["on_offset"] = on_offset_lst
+        json_data[filename+'.wav'] = {}
+        json_data[filename+'.wav']["speaker"] = speaker_lst
+        json_data[filename+'.wav']["on_offset"] = on_offset_lst
         #==== AIGC style ====
         ###if multi_channel is not None:
         ###    #Write json
