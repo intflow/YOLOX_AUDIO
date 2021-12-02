@@ -220,3 +220,4 @@ events.out.tfevents*
 
 # test images
 *.wav
+*.json
