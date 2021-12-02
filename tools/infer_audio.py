@@ -115,7 +115,7 @@ def make_parser():
 def get_wav_list(path):
     wav_names = []
 
-    set_name = ['set_01','set_02','set_03','set_04','set_05']
+    set_name = ['']
 
     file_name_list =[]
     for set_name_sub in set_name:
@@ -129,7 +129,7 @@ def get_wav_list(path):
     return wav_names
 
 
-class Predictor_track2(object):
+class Predictor_audio(object):
     def __init__(
         self,
         model,
@@ -307,12 +307,11 @@ def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_chann
     else:
         files = [path]
     files.sort()
-    logger.info("[T2]load files")
+    logger.info("load wav files")
 
     #define json outputs
     #json_file = open("track2/track2.json", "w")
-    json_data = []
-    json_data.append({"task2_answer":[{}]})
+    json_data = {}
 
     if multi_channel != None:
         files = files[::multi_channel]
@@ -322,12 +321,6 @@ def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_chann
         img_set, t_step, hop_length, sr = wav_to_img(_file, multi_channel)
         filename = _file.split('/')[-1]
         filename = filename.split('.')[0]
-
-        try:
-            set_name = filename.split('_')[0].replace('0','_')
-            drone_name = filename.split('_')[1].replace('0','_')
-        except:
-            print("no track2 files")
 
         img_idx = 0
         outputs_pixel_set = []
@@ -522,7 +515,7 @@ def main(exp, args):
         decoder = None
 
     classes_list = INTFLOW_CLASSES
-    predictor = Predictor_track2(model, exp, classes_list, trt_file, decoder, args.device, args.fp16, args.legacy)
+    predictor = Predictor_audio(model, exp, classes_list, trt_file, decoder, args.device, args.fp16, args.legacy)
     current_time = time.localtime()
     return wav_demo(predictor, vis_folder, args.path, current_time, args.save_result, args.multi_channel, args.save_folder)
 
