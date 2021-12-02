@@ -44,17 +44,22 @@ def get_gt_data(gt_idx, gt_dict):
         gt[int(vad[0] * fs), int(vad[1] * fs)] = spk
     return gt
     
-def main():
+def main(GT_PATH=None, ANSWER_PATH=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--ans', '-a', type = str, required = True, help = 'Predicted answer json file')
-    parser.add_argument('--gt',  '-g', type = str, required = True, help = 'Ground truth json file')
-    parser.add_argument('--verbose', '-v', type = int, required = False, default = 0, help = 'Verbose level')
+    parser.add_argument('--ans', '-a', type = str, required = False, help = 'Predicted answer json file')
+    parser.add_argument('--gt',  '-g', type = str, required = False, help = 'Ground truth json file')
+    parser.add_argument('--verbose', '-v', type = int, required = False, default = 1, help = 'Verbose level')
     args = parser.parse_args()
 
-    with open(args.ans, 'r') as f:
+    if GT_PATH == None:
+        GT_PATH = args.gt
+    if ANSWER_PATH == None:
+        ANSWER_PATH = args.ans
+
+    with open(ANSWER_PATH, 'r') as f:
         ans_json = json.load(f)
     
-    with open(args.gt, 'r') as f:
+    with open(GT_PATH, 'r') as f:
         gt_json = json.load(f)
     
     task2_score = []
