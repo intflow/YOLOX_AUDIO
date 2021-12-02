@@ -22,12 +22,12 @@ import scipy.io
 import librosa
 from PIL import Image
 
-root = '/data/AIGC_3rd_2021/GIST_tr2_veryhard5000_all_tr2'
+root = '/data/AIGC_3rd_2021/GIST_tr2_veryhard500'
 os.system('rm -rf '+root+'/img/')
 os.system('mkdir '+root+'/img/')
 wav_folder_path = os.path.join(root, 'wav')
 img_folder_path = os.path.join(root, 'img')
-train_label_path = os.path.join(root, 'tr2_devel_5000.json')
+train_label_path = os.path.join(root, 'tr2_devel_500.json')
 train_label_merge_out = os.path.join(root, 'label_coco_bbox.json')
 
 mode = 1   #  0:train_data,   1:validation_data

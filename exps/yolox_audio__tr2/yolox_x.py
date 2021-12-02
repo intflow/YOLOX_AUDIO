@@ -23,7 +23,7 @@ class Exp(MyExp):
         # self.multiscale_range to 0.
         self.multiscale_range = 0
         self.train_path = '/data/AIGC_3rd_2021/GIST_tr2_veryhard5000_all_tr2'
-        self.val_path = '/data/AIGC_3rd_2021/tr2_set_01_tune'
+        self.val_path = '/data/AIGC_3rd_2021/GIST_tr2_veryhard500'
         self.train_ann = "label_coco_bbox.json"
         self.val_ann = "label_coco_bbox.json"
 
