@@ -21,7 +21,7 @@ def main():
 
     ## 6. Evaluate scores (Target, Estimates)
     import metric_audio
-    metric_audio.main('/data/AIGC_3rd_2021/GIST_tr2_veryhard500/tr2_devel_500.json', 'output/tr2_devel_500_est.json')
+    metric_audio.load_json('/data/AIGC_3rd_2021/GIST_tr2_veryhard500/tr2_devel_500.json', 'output/tr2_devel_500_est.json')
     t.toc()
 
 if __name__ == '__main__':
