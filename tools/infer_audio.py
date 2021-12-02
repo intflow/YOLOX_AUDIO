@@ -57,13 +57,13 @@ def make_parser():
     parser.add_argument(
         "-f",
         "--exp_file",
-        default="track2/exps/yolox_audio__tr2/yolox_x_track2.py",
+        default="exps/yolox_audio__tr2/yolox_x.py",
         type=str,
         help="pls input your expriment description file",
     )
-    parser.add_argument("-c", "--ckpt", default="track2/ckpt/best_ckpt_tr2_3.pth", type=str, help="ckpt for eval")
+    #parser.add_argument("-c", "--ckpt", default="YOLOX_outputs/yolox_audio__tr2/best_ckpt.pth", type=str, help="ckpt for eval")
+    parser.add_argument("-c", "--ckpt", default="/data/pretrained/yolox_x__AGC21_tr2.pth", type=str, help="ckpt for eval")
     #parser.add_argument("-m", "--model", default=None, type=str, help="model reference for eval")
-    #parser.add_argument("-c", "--ckpt", default="/data/pretrained/hcow/yolox_s_oad_lm3__intflow_total_1K_p0.pth", type=str, help="ckpt for eval")
     parser.add_argument(
         "--device",
         default="gpu",
@@ -413,7 +413,9 @@ def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_chann
         if len(vad_set) > 0:
             vad_set[:,0:2] *= time_unit
 
-        ##print(vad_set)
+
+        #Write json
+        a=10
 
         #==== AIGC style ====
         ###if multi_channel is not None:
