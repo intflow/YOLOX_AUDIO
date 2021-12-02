@@ -391,10 +391,10 @@ def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_chann
         del_id = 0
         for vad in vad_set:
             del_id += 1
-            if vad[1] - vad[0] < 2.0/time_unit:
+            if vad[1] - vad[0] < 0.1/time_unit:
                 del_list.append(del_id-1)
                 continue
-            if vad[0] <= 6.0/time_unit:
+            if vad[0] <= 0.1/time_unit:
                 del_list.append(del_id-1)
                 continue
 
@@ -408,8 +408,16 @@ def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_chann
 
 
         #Write json
-        a=10
+        speaker_lst = []
+        on_offset_lst = []
+        CLASS_NAME = ["M", "W", "C"]
+        for vad in vad_set:
+            speaker_lst.append(CLASS_NAME[int(vad[-1])])
+            on_offset_lst.append([vad_set[0], vad_set[1]])
 
+        json_data[_file+'.wav'] = {}
+        json_data[_file+'.wav']["speaker"] = speaker_lst
+        json_data[_file+'.wav']["on_offset"] = on_offset_lst
         #==== AIGC style ====
         ###if multi_channel is not None:
         ###    #Write json
@@ -443,7 +451,7 @@ def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_chann
         #with open("track2/track2.json", "w", encoding='UTF-8') as json_file:
         #    json.dump(json_data, json_file, indent=2, ensure_ascii=False)
 
-    logger.info("[T2]write json")
+    logger.info("write json finished")
 
     return json_data
                 
