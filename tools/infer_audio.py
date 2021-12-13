@@ -413,7 +413,7 @@ def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_chann
         CLASS_NAME = ["M", "W", "C"]
         for vad in vad_set:
             speaker_lst.append(CLASS_NAME[int(vad[-1])])
-            on_offset_lst.append([vad[0], vad[1]])
+            on_offset_lst.append([round(vad[0],3), round(vad[1],3)])
 
         json_data[filename+'.wav'] = {}
         json_data[filename+'.wav']["speaker"] = speaker_lst
