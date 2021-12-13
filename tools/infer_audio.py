@@ -418,6 +418,9 @@ def wav_demo(predictor, vis_folder, path, current_time, save_result, multi_chann
         json_data[filename+'.wav'] = {}
         json_data[filename+'.wav']["speaker"] = speaker_lst
         json_data[filename+'.wav']["on_offset"] = on_offset_lst
+
+        logger.info("==== processing "+filename+" ====")
+        logger.info(json_data[filename+'.wav'])
         #==== AIGC style ====
         ###if multi_channel is not None:
         ###    #Write json
