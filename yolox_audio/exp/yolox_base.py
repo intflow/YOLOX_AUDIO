@@ -71,7 +71,7 @@ class Exp(BaseExp):
         self.nmsthre = 0.65
 
     def get_model(self):
-        from yolox.models import YOLOX, YOLOPAFPN, YOLOXHead
+        from yolox_audio.models import YOLOX, YOLOPAFPN, YOLOXHead
 
         def init_yolo(M):
             for m in M.modules():
@@ -96,7 +96,7 @@ class Exp(BaseExp):
     def get_data_loader(
         self, batch_size, is_distributed, no_aug=False, cache_img=False
     ):
-        from yolox.data import (
+        from yolox_audio.data import (
             COCODataset,
             TrainTransform,
             YoloBatchSampler,
@@ -105,7 +105,7 @@ class Exp(BaseExp):
             MosaicDetection,
             worker_init_reset_seed,
         )
-        from yolox.utils import (
+        from yolox_audio.utils import (
             wait_for_the_master,
             get_local_rank,
         )
@@ -229,7 +229,7 @@ class Exp(BaseExp):
         return self.optimizer
 
     def get_lr_scheduler(self, lr, iters_per_epoch):
-        from yolox.utils import LRScheduler
+        from yolox_audio.utils import LRScheduler
 
         scheduler = LRScheduler(
             self.scheduler,
@@ -244,7 +244,7 @@ class Exp(BaseExp):
         return scheduler
 
     def get_eval_loader(self, batch_size, is_distributed, testdev=False, legacy=False):
-        from yolox.data import COCODataset, ValTransform
+        from yolox_audio.data import COCODataset, ValTransform
 
         valdataset = COCODataset(
             data_dir=self.data_dir,
@@ -273,7 +273,7 @@ class Exp(BaseExp):
         return val_loader
 
     def get_evaluator(self, batch_size, is_distributed, testdev=False, legacy=False):
-        from yolox.evaluators import COCOEvaluator
+        from yolox_audio.evaluators import COCOEvaluator
 
         val_loader = self.get_eval_loader(batch_size, is_distributed, testdev, legacy)
         evaluator = COCOEvaluator(

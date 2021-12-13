@@ -9,10 +9,10 @@ from loguru import logger
 
 import os
 
-from yolox.data.dataloading import get_yolox_datadir
-from yolox.data.datasets.datasets_wrapper import Dataset
-import yolox.utils.boxes as B
-import yolox.utils.visualize as V
+from yolox_audio.data.dataloading import get_yolox_datadir
+from yolox_audio.data.datasets.datasets_wrapper import Dataset
+import yolox_audio.utils.boxes as B
+import yolox_audio.utils.visualize as V
 from PIL import Image
 import torch
 

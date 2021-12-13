@@ -5,8 +5,8 @@ import torch
 import torch.nn as nn
 import torch.distributed as dist
 
-from yolox.exp import Exp as MyExp
-from yolox.data import get_yolox_datadir
+from yolox_audio.exp import Exp as MyExp
+from yolox_audio.data import get_yolox_datadir
 
 class Exp(MyExp):
     def __init__(self):
@@ -62,11 +62,11 @@ class Exp(MyExp):
         self.nmsthre = 0.65
 
     def get_data_loader(self, batch_size, is_distributed, no_aug=False, cache_img=False):
-        from yolox.data.datasets.intflow import INTFLOWDataset
-        from yolox.data.datasets.mosaicdetection import MosaicDetection
-        from yolox.data.data_augment import TrainTransform
-        from yolox.data.dataloading import DataLoader
-        from yolox.data.samplers import InfiniteSampler, YoloBatchSampler
+        from yolox_audio.data.datasets.intflow import INTFLOWDataset
+        from yolox_audio.data.datasets.mosaicdetection import MosaicDetection
+        from yolox_audio.data.data_augment import TrainTransform
+        from yolox_audio.data.dataloading import DataLoader
+        from yolox_audio.data.samplers import InfiniteSampler, YoloBatchSampler
         import torch.distributed as dist
 
         dataset = INTFLOWDataset(
@@ -123,7 +123,7 @@ class Exp(MyExp):
         return train_loader
 
     def get_eval_loader(self, batch_size, is_distributed, testdev=False):
-        from yolox.data import INTFLOWDataset, ValTransform
+        from yolox_audio.data import INTFLOWDataset, ValTransform
 
         valdataset = INTFLOWDataset(
             data_dir=self.val_path,
@@ -154,7 +154,7 @@ class Exp(MyExp):
         return val_loader
 
     def get_evaluator(self, batch_size, is_distributed, testdev=False):
-        from yolox.evaluators import INTFLOWEvaluator
+        from yolox_audio.evaluators import INTFLOWEvaluator
 
         val_loader = self.get_eval_loader(batch_size, is_distributed, testdev)
         evaluator = INTFLOWEvaluator(

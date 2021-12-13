@@ -15,7 +15,7 @@ import random
 import cv2
 import numpy as np
 
-from yolox.utils import xyxy2cxcywh
+from yolox_audio.utils import xyxy2cxcywh
 
 
 def augment_hsv(img, hgain=0.015, sgain=0.7, vgain=0.4):

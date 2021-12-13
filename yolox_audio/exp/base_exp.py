@@ -12,7 +12,7 @@ from tabulate import tabulate
 import torch
 from torch.nn import Module
 
-from yolox.utils import LRScheduler
+from yolox_audio.utils import LRScheduler
 
 
 class BaseExp(metaclass=ABCMeta):

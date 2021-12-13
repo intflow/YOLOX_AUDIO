@@ -8,4 +8,4 @@ from .losses import IOUloss, MultiClassBCELoss
 from .yolo_fpn import YOLOFPN
 from .yolo_head import YOLOXHead
 from .yolo_pafpn import YOLOPAFPN
-from .yolox import YOLOX
+from .yolox_audio import YOLOX

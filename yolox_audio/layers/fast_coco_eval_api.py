@@ -12,9 +12,9 @@ import time
 import numpy as np
 from pycocotools.cocoeval import COCOeval
 
-# import torch first to make yolox._C work without ImportError of libc10.so
+# import torch first to make yolox_audio._C work without ImportError of libc10.so
 # in YOLOX, env is already set in __init__.py.
-from yolox import _C
+from yolox_audio import _C
 
 
 class COCOeval_opt(COCOeval):

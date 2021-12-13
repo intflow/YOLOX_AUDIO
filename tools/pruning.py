@@ -10,9 +10,9 @@ from loguru import logger
 import torch
 import torch.backends.cudnn as cudnn
 
-from yolox.core import Pruner, launch
-from yolox.exp import get_exp
-from yolox.utils import configure_nccl, configure_omp, get_num_devices
+from yolox_audio.core import Pruner, launch
+from yolox_audio.exp import get_exp
+from yolox_audio.utils import configure_nccl, configure_omp, get_num_devices
 
 
 def make_parser():

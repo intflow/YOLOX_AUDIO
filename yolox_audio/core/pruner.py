@@ -12,9 +12,9 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 import torch.nn as nn
 import numpy as np
 import torch_pruning as tp
-from yolox.models import *
-from yolox.data import DataPrefetcher
-from yolox.utils import (
+from yolox_audio.models import *
+from yolox_audio.data import DataPrefetcher
+from yolox_audio.utils import (
     MeterBuffer,
     ModelEMA,
     all_reduce_norm,

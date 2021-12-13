@@ -9,15 +9,15 @@ from loguru import logger
 import torch
 from torch import nn
 
-from yolox.exp import get_exp
-from yolox.models.network_blocks import SiLU
-from yolox.utils import replace_module
+from yolox_audio.exp import get_exp
+from yolox_audio.models.network_blocks import SiLU
+from yolox_audio.utils import replace_module
 
 
 def make_parser():
     parser = argparse.ArgumentParser("YOLOX onnx deploy")
     parser.add_argument(
-        "--output-name", type=str, default="yolox.onnx", help="output name of models"
+        "--output-name", type=str, default="yolox_audio.onnx", help="output name of models"
     )
     parser.add_argument(
         "--input", default="images", type=str, help="input node name of onnx model"

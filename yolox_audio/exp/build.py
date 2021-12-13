@@ -19,16 +19,16 @@ def get_exp_by_file(exp_file):
 
 
 def get_exp_by_name(exp_name):
-    import yolox
+    import yolox_audio
 
-    yolox_path = os.path.dirname(os.path.dirname(yolox.__file__))
+    yolox_path = os.path.dirname(os.path.dirname(yolox_audio.__file__))
     filedict = {
-        "yolox-s": "yolox_s.py",
-        "yolox-m": "yolox_m.py",
-        "yolox-l": "yolox_l.py",
-        "yolox-x": "yolox_x.py",
-        "yolox-tiny": "yolox_tiny.py",
-        "yolox-nano": "nano.py",
+        "yolox_audio-s": "yolox_s.py",
+        "yolox_audio-m": "yolox_m.py",
+        "yolox_audio-l": "yolox_l.py",
+        "yolox_audio-x": "yolox_x.py",
+        "yolox_audio-tiny": "yolox_tiny.py",
+        "yolox_audio-nano": "nano.py",
         "yolov3": "yolov3.py",
     }
     filename = filedict[exp_name]

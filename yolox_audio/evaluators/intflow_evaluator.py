@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 import torch
 
-from yolox.utils import (
+from yolox_audio.utils import (
     gather,
     is_main_process,
     postprocess,
@@ -205,7 +205,7 @@ class INTFLOWEvaluator:
                 json.dump(data_dict, open(tmp, "w"))
                 cocoDt = cocoGt.loadRes(tmp)
             try:
-                from yolox.layers import COCOeval_opt as COCOeval
+                from yolox_audio.layers import COCOeval_opt as COCOeval
             except ImportError:
                 from pycocotools.cocoeval import COCOeval
 

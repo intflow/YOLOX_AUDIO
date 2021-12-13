@@ -18,10 +18,10 @@ from PIL import Image
 
 import torch
 
-from yolox.data.data_augment import ValTransform
-from yolox.data.datasets import COCO_CLASSES, INTFLOW_CLASSES, CROWDHUMAN_CLASSES
-from yolox.exp import get_exp
-from yolox.utils import fuse_model, get_model_info, postprocess, vis_bbox
+from yolox_audio.data.data_augment import ValTransform
+from yolox_audio.data.datasets import COCO_CLASSES, INTFLOW_CLASSES
+from yolox_audio.exp import get_exp
+from yolox_audio.utils import fuse_model, get_model_info, postprocess, vis_bbox
 
 
 WAV_EXT = [".wav"]

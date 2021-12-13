@@ -15,7 +15,7 @@ pp_folder = os.path.abspath(os.path.dirname(p_folder))
 sys.path.append(c_folder)
 sys.path.append(p_folder)
 sys.path.append(pp_folder)
-import yolox.utils.boxes as B
+import yolox_audio.utils.boxes as B
 import json
 from scipy.io import wavfile
 import scipy.io

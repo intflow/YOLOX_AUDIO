@@ -5,7 +5,7 @@
 
 import cv2
 import numpy as np
-import yolox.utils.boxes as B
+import yolox_audio.utils.boxes as B
 import os
 
 __all__ = ["vis", "vis_bbox"]

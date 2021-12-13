@@ -7,13 +7,13 @@ import random
 import cv2
 import numpy as np
 
-from yolox.utils import adjust_box_anns, get_local_rank
+from yolox_audio.utils import adjust_box_anns, get_local_rank
 
 from ..data_augment import box_candidates, random_perspective
 from .datasets_wrapper import Dataset
 from PIL import Image
 import torch
-import yolox.utils.visualize as V
+import yolox_audio.utils.visualize as V
 
 def get_mosaic_coordinate(mosaic_image, mosaic_index, xc, yc, w, h, input_h, input_w):
     # TODO update doc
