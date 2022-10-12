@@ -254,7 +254,7 @@ class Generator():
                 clean_sig = np.append(clean_sig, seg_sig, axis = 1)
             
             # amp_pertb = (np.random.rand() * (1.4125 - 0.7079)) + 0.7079
-            amp_pertb = (np.random.rand() + 0.5) * 2.5
+            amp_pertb = (np.random.rand() + 0.8) / 0.8
             clean_sig = np.multiply(clean_sig, amp_pertb)
             len_clean_sig = clean_sig.shape[1]
             len_out_sig = sig_tmp.shape[1]
@@ -315,7 +315,7 @@ if __name__ == '__main__':
     parser.add_argument('--length',     '-l', type = int, required = False, default = 300, help = 'file length(s)')
     parser.add_argument('--fs',     '-f', type = int, required = False, default = 48000, help = 'Sampling rate(hz)')
     parser.add_argument('--num_channel',     '-c', type = int, required = False, default = 1, help = 'Number of audio channel')
-    parser.add_argument('--num',     '-n', type = int, required = False, default = 5, help = 'The number of the dataset')
+    parser.add_argument('--num',     '-n', type = int, required = False, default = 60, help = 'The number of the dataset')
     args = parser.parse_args()
     
     source_dir = args.source_dir
