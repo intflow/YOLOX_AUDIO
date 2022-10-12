@@ -28,7 +28,8 @@ class Generator():
         self.event_cat = event_cat
         
         f_name = open(name_path, "r")
-        self.names = f_name.readlines()
+        names = f_name.readlines()
+        self.names = list(map(lambda s: s.strip(), names))
         self.check_directory()
         self.config_session()
         self.mix_conifg()
@@ -47,16 +48,10 @@ class Generator():
 
     def mix_conifg(self):
         # 음원 간격
-        self.sil_ = np.add(np.multiply(np.arange(9), 1), 1) # 1 ~ 10sec
+        self.sil_ = np.add(np.multiply(np.arange(19), 1), 1) # 1 ~ 20sec
         # 음원 개수 및 확률
-        self.num_mix_ = np.arange(30) # mix 0 ~ 9
-        self.num_mix_prob_ = np.array([.016, .016, .016, .016, .016, 
-                                       .033, .033, .033, .033, .033, 
-                                       .06, .05, .05, .05, .05,
-                                       .05, .05, .05, .05, .05,
-                                       .033, .033, .033, .033, .033, 
-                                       .016, .016, .016, .016, .016, 
-                                       ])
+        self.num_mix_ = np.arange(60) # mix 0 ~ 9
+        self.num_mix_prob_ = self.num_mix_ / np.sum(self.num_mix_)
 
         # self.ov_prob = 0.15
         self.ov_prob = 0.3
@@ -160,6 +155,7 @@ class Generator():
                     break 
             sig_tmp = np.concatenate(sig_tmp, axis=1)
             sig_tmp = sig_tmp[:,:unit_len]
+            sig_tmp = np.multiply(sig_tmp, 0.6)
             
             ## Mix Event sounds into background signal
             event_class_list, event_session_list, on_offset_list = [], [], []
@@ -176,16 +172,6 @@ class Generator():
                 event_session_list.append(session)
                 session_wav_path = '%s' %(np.random.choice(self.event_wav_[event_idx][session_idx], 1)[0])
                 
-                ###f_txt = open(os.path.join(self.label_dir, session + '.txt'), 'r')
-                ###while True:
-                ###    text = f_txt.readline()
-                ###    if not text: break
-                ###    utt_idx = text.split('\n')[0].split('\t')[1]
-                ###    if utt_idx == utterance_idx:
-                ###        onset  = float(text.split('\n')[0].split('\t')[2]) / self.fs
-                ###        offset = float(text.split('\n')[0].split('\t')[3]) / self.fs
-                ###        break
-                ###f_txt.close()
                 session_wav, _  = librosa.load(session_wav_path, mono = True, sr = self.fs)
                 onset = 0
                 offset = len(session_wav[:]) / self.fs
@@ -194,6 +180,8 @@ class Generator():
                 #Write global on/offset
                 data_onset  = float(clean_sig.shape[1]) / self.fs
                 data_offset = float(clean_sig.shape[1]) / self.fs + offset - onset
+                if data_onset >= self.length:
+                    break
                 on_offset_list.append([round(data_onset, 4), round(data_offset, 4), int(event_idx)])
 
                 if self.rirs is not None:
@@ -253,6 +241,8 @@ class Generator():
                     
                     data_onset  = (float(clean_sig.shape[1] + seg_sig.shape[1] - ov_len)) / self.fs
                     data_offset = (float(clean_sig.shape[1] + seg_sig.shape[1] - ov_len)) / self.fs + offset - onset
+                    if data_onset >= self.length:
+                        break
                     on_offset_list.append([round(data_onset,4), round(data_offset,4), int(event_idx_temp)])
                     
                     seg_sig = ov_seg_sig
@@ -264,12 +254,13 @@ class Generator():
                 clean_sig = np.append(clean_sig, seg_sig, axis = 1)
             
             # amp_pertb = (np.random.rand() * (1.4125 - 0.7079)) + 0.7079
-            amp_pertb = (np.random.rand() + 0.5623) * 1.7783 
+            amp_pertb = (np.random.rand() + 0.5) * 2.5
             clean_sig = np.multiply(clean_sig, amp_pertb)
             len_clean_sig = clean_sig.shape[1]
-            len_noise = sig_tmp.shape[1]
+            len_out_sig = sig_tmp.shape[1]
+            #len_noise = sig_tmp.shape[1]
 
-            noise_pos = np.random.randint(len_noise - (len_clean_sig + 1))
+            # noise_pos = np.random.randint(len_noise - (len_clean_sig + 1))
             # noise_sig = np.zeros(clean_sig.shape)
             # noise_pos = np.random.randint(len_noise - (len_clean_sig + 1 + self.noise_pertb_length))
             # for c_idx in range(self.num_channel):
@@ -287,7 +278,10 @@ class Generator():
             ####        acoustic_noise = self.acoutics[np.random.randint(len(self.acoutics))]
             ####        noise_sig[:, a_idx:a_idx + acoustic_noise.shape[1]] = np.add(noise_sig[:, a_idx:a_idx + acoustic_noise.shape[1]], acoustic_noise)
             
-            sig_tmp[:,:len_clean_sig] += clean_sig
+            if len_clean_sig < len_out_sig:
+                sig_tmp[:,:len_clean_sig] += clean_sig
+            else:
+                sig_tmp += clean_sig[:,:len_out_sig]
             if file_index < len(self.names):
                 wav_name = '%s.wav' % (self.names[file_index])
             else:
@@ -308,10 +302,13 @@ class Generator():
         
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source-dir',   '-i', type = str, required = False, default = 'test_data/split_test', help = 'Input data')
+    parser.add_argument('--source-dir',   '-i', type = str, required = False, default = '/NIA75_2022/pig/raw_audio/pigfarmA/SL_audio_pig_2022-10-06/split', help = 'Input data')
+    ###parser.add_argument('--source-dir',   '-i', type = str, required = False, default = 'test_data/split_test', help = 'Input data')
     parser.add_argument('--event-cat',   '-e', type = str, required = False, default = ['cry', 'noncry'], help = 'Input data')
-    parser.add_argument('--name-path',  '-m', type = str, required = False, default = 'test_data/name_pigcry5.txt', help = 'Output data')
-    parser.add_argument('--data-dir',  '-o', type = str, required = False, default = 'test_data/dataset-5', help = 'Output data')
+    parser.add_argument('--name-path',  '-m', type = str, required = False, default = '/NIA75_2022/pig/raw_audio/pigfarmA/SL_audio_pig_2022-10-06/split/name_pigcry60.txt', help = 'Output data')
+    ###parser.add_argument('--name-path',  '-m', type = str, required = False, default = 'test_data/name_pigcry5.txt', help = 'Output data')
+    parser.add_argument('--data-dir',  '-o', type = str, required = False, default = '/NIA75_2022/pig/raw_audio/pigfarmA/SL_audio_pig_2022-10-06/split/dataset-pigcry60', help = 'Output data')
+    ###parser.add_argument('--data-dir',  '-o', type = str, required = False, default = 'test_data/dataset-pigcry5', help = 'Output data')
     parser.add_argument('--rir-dir',  '-r', type = str, required = False, default = None, help = 'RIR data')
     parser.add_argument('--bias',    '-b', type = int, required = False, default = 0, help = 'Index bias')
     parser.add_argument('--datatype','-d', type = str, required = False, default = 'train', help = 'Data type')
@@ -332,11 +329,12 @@ if __name__ == '__main__':
     fs = args.fs
     num_channel = args.num_channel
     num_dataset = args.num
+    data_dir = data_dir+"_seed"+str(index_bias)
     
     gt_data = {}
     # eval_data['track2_results'] = []
 
-    num_workers = 1
+    num_workers = 8
     
     generator = Generator(source_dir, event_cat, name_path, data_dir, rir_dir, data_type = datatype, length = length, fs = fs, num_channel = num_channel, index_bias = index_bias)
     
