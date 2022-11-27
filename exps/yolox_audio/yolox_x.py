@@ -22,8 +22,8 @@ class Exp(MyExp):
         # To disable multiscale training, set the
         # self.multiscale_range to 0.
         self.multiscale_range = 0
-        self.train_path = '/data/AIGC_3rd_2021/GIST_tr2_veryhard5000_all_tr2'
-        self.val_path = '/data/AIGC_3rd_2021/GIST_tr2_veryhard500'
+        self.train_path = '/data/NIA75_audio/pig'
+        self.val_path = '/data/NIA75_audio/pig'
         self.train_ann = "label_coco_bbox.json"
         self.val_ann = "label_coco_bbox.json"
 
@@ -57,7 +57,7 @@ class Exp(MyExp):
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
 
         # -----------------  testing config ------------------ #
-        self.test_size = (256, 512)
+        self.test_size = (512, 1024)
         self.test_conf = 0.01
         self.nmsthre = 0.65
 

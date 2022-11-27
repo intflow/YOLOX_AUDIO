@@ -107,14 +107,16 @@ class Generator():
 
     def config_session(self):
         if self.data_type == 'train':
-            animal_cry_sessions   = ['pigfarm_cry_01',]
+            animal_cry_sessions   = ['cry',]
+            # animal_cry_sessions   = ['pigfarm_cry_01',]
             animal_cry_pathes = []
             for idx in range(len(animal_cry_sessions)):
                 paths = glob.glob(os.path.join(os.path.join(self.event_dir, animal_cry_sessions[idx]), '*.wav'))
                 animal_cry_pathes.append(paths)
             animal_cry_pathes = np.asarray(animal_cry_pathes)
             
-            farm_noise_sessions = ['pigfarm_hitnoise_01',]
+            farm_noise_sessions = ['noise',]
+            # farm_noise_sessions = ['pigfarm_hitnoise_01',]
             farm_noise_pathes = []
             for idx in range(len(farm_noise_sessions)):
                 paths = glob.glob(os.path.join(os.path.join(self.event_dir, farm_noise_sessions[idx]), '*.wav'))
@@ -302,20 +304,23 @@ class Generator():
         
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--source-dir',   '-i', type = str, required = False, default = '/NIA75_2022/pig/raw_audio/pigfarmA/SL_audio_pig_2022-10-06/split', help = 'Input data')
+    parser.add_argument('--source-dir',   '-i', type = str, required = False, default = '/NIA75_2022/cow/raw_audio/cowfarmC/hangil_audio_cow_2022-10-11/split', help = 'Input data')
+    # parser.add_argument('--source-dir',   '-i', type = str, required = False, default = '/NIA75_2022/pig/raw_audio/pigfarmA/SL_audio_pig_2022-10-06/split', help = 'Input data')
     ###parser.add_argument('--source-dir',   '-i', type = str, required = False, default = 'test_data/split_test', help = 'Input data')
     parser.add_argument('--event-cat',   '-e', type = str, required = False, default = ['cry', 'noncry'], help = 'Input data')
     parser.add_argument('--name-path',  '-m', type = str, required = False, default = '/NIA75_2022/pig/raw_audio/pigfarmA/SL_audio_pig_2022-10-06/split/name_pigcry60.txt', help = 'Output data')
+    # parser.add_argument('--name-path',  '-m', type = str, required = False, default = '/NIA75_2022/pig/raw_audio/pigfarmA/SL_audio_pig_2022-10-06/split/name_pigcry60.txt', help = 'Output data')
     ###parser.add_argument('--name-path',  '-m', type = str, required = False, default = 'test_data/name_pigcry5.txt', help = 'Output data')
-    parser.add_argument('--data-dir',  '-o', type = str, required = False, default = '/NIA75_2022/pig/raw_audio/pigfarmA/SL_audio_pig_2022-10-06/split/dataset-pigcry60', help = 'Output data')
+    parser.add_argument('--data-dir',  '-o', type = str, required = False, default = '/NIA75_2022/cow/raw_audio/cowfarmC/hangil_audio_cow_2022-10-11/split/dataset-pigcry60', help = 'Output data')
+    # parser.add_argument('--data-dir',  '-o', type = str, required = False, default = '/NIA75_2022/pig/raw_audio/pigfarmA/SL_audio_pig_2022-10-06/split/dataset-pigcry60', help = 'Output data')
     ###parser.add_argument('--data-dir',  '-o', type = str, required = False, default = 'test_data/dataset-pigcry5', help = 'Output data')
     parser.add_argument('--rir-dir',  '-r', type = str, required = False, default = None, help = 'RIR data')
-    parser.add_argument('--bias',    '-b', type = int, required = False, default = 0, help = 'Index bias')
+    parser.add_argument('--bias',    '-b', type = int, required = False, default = 5, help = 'Index bias')
     parser.add_argument('--datatype','-d', type = str, required = False, default = 'train', help = 'Data type')
     parser.add_argument('--length',     '-l', type = int, required = False, default = 300, help = 'file length(s)')
     parser.add_argument('--fs',     '-f', type = int, required = False, default = 48000, help = 'Sampling rate(hz)')
     parser.add_argument('--num_channel',     '-c', type = int, required = False, default = 1, help = 'Number of audio channel')
-    parser.add_argument('--num',     '-n', type = int, required = False, default = 60, help = 'The number of the dataset')
+    parser.add_argument('--num',     '-n', type = int, required = False, default = 10, help = 'The number of the dataset')
     args = parser.parse_args()
     
     source_dir = args.source_dir
