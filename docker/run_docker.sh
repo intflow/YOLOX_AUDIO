@@ -4,7 +4,7 @@
 #sudo docker login docker.io -u kmjeon -p # Type yourself
 
 #Pull update docker image
-sudo docker pull intflow/yolox:dev_1.0_30xx_ubuntu18.04
+sudo docker pull intflow/yolox_audio:dev_1.0_30xx_ubuntu18.04
 
 #Run Dockers for YOLOXOAD
 sudo docker run --name yolox_audio \
@@ -16,4 +16,4 @@ sudo docker run --name yolox_audio \
 --net=host \
 --privileged \
 --ipc=host \
--it intflow/yolox:dev_1.0_30xx_ubuntu18.04 /bin/bash
+-it intflow/yolox_audio:dev_1.0_30xx_ubuntu18.04 /bin/bash

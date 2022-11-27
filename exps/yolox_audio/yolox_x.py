@@ -11,13 +11,13 @@ from yolox_audio.data import get_yolox_datadir
 class Exp(MyExp):
     def __init__(self):
         super(Exp, self).__init__()
-        self.num_classes = 3
+        self.num_classes = 1
         self.depth = 1.33
         self.width = 1.25
 # ---------------- dataloader config ---------------- #
         # set worker to 4 for shorter dataloader init time
         self.data_num_workers = 4
-        self.input_size = (256, 512)  # (height, width)
+        self.input_size = (512, 1024)  # (height, width)
         # Actual multiscale ranges: [640-5*32, 640+5*32].
         # To disable multiscale training, set the
         # self.multiscale_range to 0.

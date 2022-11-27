@@ -3,7 +3,5 @@
 # Copyright (c) Intflow, Inc. and its affiliates.
 
 INTFLOW_CLASSES = (
-    "M",
-    "W",
-    "C"
+    "cry"
 )
